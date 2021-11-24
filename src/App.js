@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react'
+import { MentionsInput, Mention } from 'react-mentions'
+import NewWindow from 'react-new-window'
 
 function App() {
+  const [newWindow, setNewWindow] = useState(false);
+  const [value, setValue] = useState("");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <button onClick={() => setNewWindow(!newWindow)}>{newWindow ? 'attach': 'detach'}</button>
+      {newWindow ? (
+        <NewWindow>
+          <MentionsInput value={value} onChange={(e, newValue) => setValue(newValue)}>
+            <Mention trigger="@" data={[]} />
+          </MentionsInput>
+        </NewWindow>
+      ) : (
+        <MentionsInput value={value} onChange={(e, newValue) => setValue(newValue)}>
+          <Mention trigger="@" data={[]} />
+        </MentionsInput>
+      )}
+    </>
   );
 }
 
